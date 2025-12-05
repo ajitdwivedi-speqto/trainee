@@ -15,8 +15,7 @@ urlpatterns = [
     path('buy<int:id>/', views.buy_product, name='buy_product'),
 
     # # ! API endpoints
-    # path('api/products/', views.product_api, name='api_product_list'),
-    # path('api/products<int:id>/', views.product_detail_api, name='api_product_detail'),
+   
     path('api/', include(router.urls)),  # API endpoints
 ]
 

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button><a href="{% url 'add_student' %}">Add Student</a></button>
+    <table border="3px" cellspacing="0px" cellpadding="10px">
+        <tr>
+            <th>Student Name</th>
+            <th>Student Roll NO</th>
+            <th>Math Marks</th>
+            <th>Science Marks</th>
+            <th>English Marks</th>
+            <th>History Grade</th>
+            <th>Actions</th>
+        </tr>
+        {% for student in students %}
+        <tr>
+            <td>{{ student.user }}</td>
+            <td>{{ student.rollno }}</td>
+            <td>{{ student.math_marks }}</td>
+            <td>{{ student.science_marks }}</td>
+            <td>{{ student.english_marks }}</td>
+            <td>{{ student.history_marks }}</td>
+            
+            <td>
+                <button><a href="{% url 'edit_student' student.id %}">Edit</a></button>
+                <button><a href="{% url 'delete_student' student.id %}">Delete</a></button>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

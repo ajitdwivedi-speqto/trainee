@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+{% block content %}
+<body>
+    <table border="1" cellpadding="10" cellspacing="0">
+        <thead>
+        <tr>
+        <th>product_name</th>
+        <th>product_price</th>
+        <th>product_specification</th>
+        <th>product_image</th>
+        <th>edit_product</th>
+        </tr></thead>
+    {% for product in products %}
+    <tbody>
+        <tr>
+        <td>{{ product.name }}</td>
+        <td>{{ product.price }}</td>
+        <td>{{ product.specifications }}</td>
+        {% if product.img %}
+        <td><img src="{{ product.img.url }}" alt="{{ product.name }}"></td>
+        {% else %}
+        <td>No Image</td>
+        {% endif %}
+        <td><button><a href="{% url 'edit_product' product.id %}"> Edit Product</a></button></td>
+        <td><button><a href="{% url 'buy_product' product.id %}">Buy Now </a></button></td>
+        </tr>
+    </tbody>
+    {% endfor %}
+</table>
+<br>
+<br>
+<button><a href="{% url 'add_product' %}">Add new Product</a></button>
+
+
+<div><button><a href="{% url 'product-list'%}"> API</a></button></div>
+{% endblock %}
+</body>
+</html>

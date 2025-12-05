@@ -49,14 +49,7 @@ def buy_product(request,id):
             quantity=form.cleaned_data['quantity']
             details=f"Product: {products.name}\nPrice: {products.price}\nQuantity: {quantity}\nTotal Price: {products.price * quantity}\nShipping Address: {address}"
             send_order_email(name,email,details)
-            # send_mail(
-            # 'Your Order Confirmation',
-            # details+  
-            # '\nThank you for your purchase!',
-            # None,
-            # [email],
-            # fail_silently=False,
-            # )
+             )
 
             return redirect('home')
     else:
@@ -73,48 +66,7 @@ def send_order_email(name,email,details):
     msg.attach_alternative(html_content, "text/html")
     msg.send()
 
-# ! Api Views
-# from rest_framework.decorators import api_view
-# from rest_framework.response import Response
-# from rest_framework import status
-# from ecom.models import product
-# from ecom.serializers import ProductSerializer
 
-# @api_view(['GET', 'POST'])
-# def product_api(request):
-#     if request.method == 'GET':
-#         products = product.objects.all()
-#         serializer = ProductSerializer(products, many=True)
-#         return Response(serializer.data)
-
-#     elif request.method == 'POST':
-#         serializer = ProductSerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-# @api_view(['GET', 'PUT', 'PATCH','DELETE'])
-# def product_detail_api(request, id=1):
-#     try:
-#         products = product.objects.get(id=id)
-#     except product.DoesNotExist:
-#         return Response(status=status.HTTP_404_NOT_FOUND)
-
-#     if request.method == 'GET':
-#         serializer = ProductSerializer(products)
-#         return Response(serializer.data)
-
-
-#     elif request.method in ['PUT', 'PATCH']:
-#         serializer = ProductSerializer(products, data=request.data, partial=(request.method == 'PATCH'))
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-#     elif request.method == 'DELETE':
-#         products.delete()
-#         return Response(status=status.HTTP_204_NO_CONTENT)
 
 from rest_framework import viewsets
 from .models import product
@@ -128,16 +80,9 @@ from utils.ExceptionHandler import custom_exception_handler
 from utils.CustomException import InvalidProductId
 
 
-# # Custom authentication that skips CSRF
-# from rest_framework.authentication import SessionAuthentication
-# class CsrfExemptSessionAuthentication(SessionAuthentication):
-#     def enforce_csrf(self, request):
-#         return  # do nothing
-
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = product.objects.all()
     serializer_class = ProductSerializer
-    # authentication_classes = [CsrfExemptSessionAuthentication]
 
     @swagger_auto_schema(
         operation_description="List all courses"
@@ -154,7 +99,7 @@ class ProductViewSet(viewsets.ModelViewSet):
         try:
             return super().get_object()
         except Http404:
-            # Convert Django's 404 into your custom 400
+           
             raise InvalidProductId()
 
     
